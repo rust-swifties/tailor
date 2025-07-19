@@ -1,6 +1,6 @@
 # Tailor
 
-**Tailor** is a command-line tool inspired by the utility of the UNIX `tail` command and the logical inclusivity of the `or` operator. It allows you to extract and manipulate the final lines of text files with precision and flexibility. Unlike an "Anti-Hero," Tailor is here to save your day without any identity crisis!
+**Tailor** [ˈteɪ.lə˞] is a command-line tool inspired by the utility of the UNIX `tail` command and the logical inclusivity of the `or` operator. It allows you to extract and manipulate the final lines of text files with precision and flexibility. Unlike an "Anti-Hero," Tailor is here to save your day without any identity crisis!
 
 ## Features
 
