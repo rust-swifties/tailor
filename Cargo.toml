@@ -1,0 +1,21 @@
+[package]
+name = "tailor"
+version = "0.1.0"
+edition = "2024"
+authors = [
+    "Benjamin Drung <bdrung@debian.org>",
+    "Nadzeya Hutsko <nadzya.info@gmail.com>",
+    "Lukas Märdian <luk@slyon.de>",
+    "Lena Voytek <lena@voytek.dev>",
+]
+
+[dependencies]
+anyhow = "1.0.0"
+clap = { version = "4.5.0", features = ["derive"] }
+env_logger = "0.11.0"
+log = "0.4.0"
+
+[dev-dependencies]
+tempfile = "3.8"
+assert_cmd = "2.0"
+predicates = "3.0"

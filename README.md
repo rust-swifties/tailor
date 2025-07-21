@@ -1,69 +1,58 @@
 # Tailor
 
-**Tailor** [ˈteɪ.lə˞] is a command-line tool inspired by the utility of the UNIX `tail` command and the logical inclusivity of the `or` operator. It allows you to extract and manipulate the final lines of text files with precision and flexibility. Unlike an "Anti-Hero," Tailor is here to save your day without any identity crisis!
-
-## Features
-
-- **Tail-like Functionality**: Extract the last `n` lines of a file, similar to the UNIX `tail` command.
-- **Pattern Matching**: Filter lines using regex patterns for precise selection.
-- **Logical OR Operations**: Combine multiple conditions for line selection with an `or`-style logic.
-- **Custom Output Formatting**: Style your output with customizable formats, such as JSON or plain text.
-
-## Installation
-
-Clone the repository and install the dependencies:
-
-```bash
-git clone https://github.com/rust-swifties/tailor.git
-cd tailor
-cargo run
-```
+**Tailor** [ˈteɪ.lə˞] is a command-line tool inspired by the utility of the UNIX `tail` command
+and the logical inclusivity of the `or` operator. It allows you to view the end of files with
+automatic recovery. If the file doesn't exist or isn't accessible, tailor executes your
+specified fallback command instead.
 
 ## Usage
 
-Run `tailor` with various options to suit your needs:
-
 ```bash
-tailor [options] <file>
+cargo build
+./targer/debug/tailor <file> [fallback_command] [args...]
 ```
 
-### Options
+- If the file exists and is readable, tailor will tail it: `tail <file>`
+- If the file doesn't exist or isn't accessible, tailor executes the specified command:
+  `[fallback_command] [args...] <file>`
 
-- `-n <number>`: Specify the number of lines to display from the end of the file (default: 10).
-- `-p <pattern>`: Filter lines matching a regex pattern.
-- `-o <format>`: Customize output format (e.g., `json`, `plain`).
-- `-v`: Enable verbose mode for detailed output.
+Run `./target/debug/tailor --help` for more information.
 
-### Examples
+# Use Cases
 
-1. Display the last 5 lines of a file:
-   ```bash
-   tailor -n 5 data.txt
-   ```
+Tailor bridges the gap between “I want to read this file” and “This file doesn’t exist yet.” It’s
+a single-command solution for reactive file access with smart fallback logic.
 
-2. Filter lines containing "error" or "warning" using regex:
-   ```bash
-   tailor -p "error|warning" logfile.txt
-   ```
+View logs or create them:
 
-3. Output the last 10 lines in JSON format:
-   ```bash
-   tailor -o json output.txt
-   ```
+```bash
+tailor /var/log/myapp.log touch
+# Runs: tail /var/log/myapp.log
+# OR:   touch /var/log/myapp.log
+```
 
-## Why Tailor?
+Check for build artifact or rebuild it:
 
-- **UNIX `tail` Power**: Builds on the simplicity and utility of `tail` for robust file processing.
-- **Logical `or` Flexibility**: Allows inclusive filtering to capture exactly what you need.
-- **Customizable Output**: Formats output to suit your preferences, making it versatile for various use cases.
+```bash
+tailor dist/index.js ./scripts/build-artifact.sh
+# Runs fallback: ./scripts/build-artifact.sh dist/index.js
+```
+
+View files with permission management:
+
+```bash
+tailor /etc/ssl/private.key chmod 600
+tailor /var/log/secure.log chown $USER:$USER
+```
 
 ## Contributing
 
-Contributions are welcome! Please fork the repository and submit a pull request with your changes. Ensure your code follows the project's style guidelines and includes tests.
+Contributions are welcome! Please fork the repository and submit a pull request with your
+changes. Ensure your code follows the project's style guidelines and includes tests.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE.txt](LICENSE.txt) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
