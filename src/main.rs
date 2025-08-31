@@ -1,6 +1,7 @@
 use anyhow::{Context, Result, bail};
 use clap::Parser;
 use log::{error, info, warn};
+use std::ffi::OsString;
 use std::fs::{File, metadata};
 use std::path::Path;
 use std::process::Command;
@@ -29,11 +30,16 @@ fn main() -> Result<()> {
     let args = Args::parse();
 
     if can_tail_file(&args.file)? {
-        run_command("tail", &[&args.file])?;
+        let tail_args: Vec<OsString> = vec![OsString::from("tail"), OsString::from(&args.file)];
+
+        let exit_code = uu_tail::uumain(tail_args.iter().cloned());
+        if exit_code != 0 {
+            bail!("failed to tail file, exit code: {}", exit_code);
+        }
     } else {
         if args.command.is_empty() {
             bail!(
-                "File '{}' is not readable and no fallback command specified.",
+                "file '{}' is not readable and no fallback command specified.",
                 args.file
             );
         }
