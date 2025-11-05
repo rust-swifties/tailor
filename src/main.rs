@@ -110,7 +110,10 @@ mod tests {
 
     #[test]
     fn test_can_tail_file_with_nonexistent_file() {
-        let result = can_tail_file("/tmp/nonexistent_file_12345").unwrap();
+        let temp_file = NamedTempFile::new().unwrap();
+        let file_path = temp_file.path().to_str().unwrap();
+        std::fs::remove_file(file_path).unwrap();
+        let result = can_tail_file(file_path).unwrap();
         assert!(!result, "Should not be able to tail a nonexistent file");
     }
 
@@ -212,8 +215,11 @@ mod tests {
 
     #[test]
     fn test_main_fails_without_fallback_command() {
+        let temp_file = NamedTempFile::new().unwrap();
+        let file_path = temp_file.path().to_str().unwrap();
+        std::fs::remove_file(file_path).unwrap();
         let mut cmd = Command::cargo_bin("tailor").unwrap();
-        cmd.arg("/tmp/nonexistent_file_12345")
+        cmd.arg(file_path)
             .assert()
             .failure()
             .stderr(contains("no fallback command"));
