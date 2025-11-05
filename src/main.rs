@@ -6,7 +6,7 @@ use std::fs::{File, metadata};
 use std::path::Path;
 use std::process::Command;
 
-/// tail a file or execite the fallback command
+/// tail a file or execute the fallback command
 ///
 /// Attempts to tail a file. If the file doesn't exist or can't be read,
 /// runs the specified fallback command instead passing the specified file.
@@ -14,7 +14,7 @@ use std::process::Command;
 /// Examples:
 ///   tailor file.txt touch                         # tail file.txt, or touch file.txt
 ///   tailor file.txt chmod 755                     # tail file.txt, or chmod 755 file.txt
-///   tailor config.json cp config.template.json    # tail file.txt, or cp config.template.json config.json
+///   tailor config.json cp config.template.json    # tail config.json, or cp config.template.json config.json
 #[derive(Parser, Debug)]
 #[command(version, about, long_about, verbatim_doc_comment)]
 struct Args {
